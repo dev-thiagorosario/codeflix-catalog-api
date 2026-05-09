@@ -9,5 +9,5 @@ use App\Core\Domain\Entity\CategoryEntity;
 
 interface CreateCategoryUsecaseInterface
 {
-    public function __invoke(CreateCategoryDTO $dto): CategoryEntity;
+    public function __invoke(CreateCategoryDTO $input): CategoryEntity;
 }

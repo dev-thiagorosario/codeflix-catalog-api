@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Core\Application\Usecase\Category;
 
-use App\Core\Application\DTO\Category\CreateCategoryDTO;
-use App\Core\Domain\Entity\CategoryEntity;
+use App\Core\Application\DTO\Category\CreateCategoryInputDTO;
+use App\Core\Application\DTO\Category\CreateCategoryOutputDTO;
 
 interface CreateCategoryUsecaseInterface
 {
-    public function __invoke(CreateCategoryDTO $input): CategoryEntity;
+    public function __invoke(CreateCategoryInputDTO $input): CreateCategoryOutputDTO;
 }

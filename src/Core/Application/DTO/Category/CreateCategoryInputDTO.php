@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Core\Application\DTO\Category;
 
-class CreateCategoryDTO
+class CreateCategoryInputDTO
 {
     public function __construct(
         public string $name,
-        public ?string $description = null,
+        public string $description = '',
         public bool $isActive = true,
     ){}
 }

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core\Application\Usecase\Category;
 
-use App\Core\Application\DTO\Category\CreateCategoryDTO;
+use App\Core\Application\DTO\Category\CreateCategoryInputDTO;
+use App\Core\Application\DTO\Category\CreateCategoryOutputDTO;
 use App\Core\Application\Usecase\Category\CreateCategoryUsecase;
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
@@ -21,14 +22,14 @@ class CreateCategoryUsecaseUnitTest extends TestCase
         parent::tearDown();
     }
 
-    public function testCreateNewCategory(): void
+    public function test_create_new_category(): void
     {
         $categoryId = UuidResolver::random();
         $categoryName = 'Test Category';
         $categoryDescription = 'Test Description';
         $isActive = true;
 
-        $input = Mockery::mock(CreateCategoryDTO::class);
+        $input = Mockery::mock(CreateCategoryInputDTO::class);
         $input->name = $categoryName;
         $input->description = $categoryDescription;
         $input->isActive = $isActive;
@@ -60,8 +61,8 @@ class CreateCategoryUsecaseUnitTest extends TestCase
 
         $result = $usecase($input);
 
-        $this->assertInstanceOf(CategoryEntity::class, $result);
-        $this->assertSame((string) $categoryId, $result->id());
+        $this->assertInstanceOf(CreateCategoryOutputDTO::class, $result);
+        $this->assertSame((string) $categoryId, $result->id);
         $this->assertSame($categoryName, $result->name);
         $this->assertSame($categoryDescription, $result->description);
         $this->assertTrue($result->isActive);

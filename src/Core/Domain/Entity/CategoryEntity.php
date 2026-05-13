@@ -15,6 +15,7 @@ use DateTime;
  * @property-read bool $isActive
  * @property-read DateTime $createdAt
  * @property-read DateTime $updatedAt
+ * @property-read DateTime|null $deletedAt
  */
 class CategoryEntity
 {
@@ -27,6 +28,7 @@ class CategoryEntity
         protected bool $isActive = true,
         protected DateTime|string|null $createdAt = null,
         protected DateTime|string|null $updatedAt = null,
+        protected DateTime|string|null $deletedAt = null,
     ) {
         $this->id = match (true) {
             $this->id instanceof UuidResolver => $this->id,
@@ -41,6 +43,10 @@ class CategoryEntity
         $this->updatedAt = $this->updatedAt instanceof DateTime
             ? $this->updatedAt
             : new DateTime($this->updatedAt ?: $this->createdAt->format('Y-m-d H:i:s'));
+
+        $this->deletedAt = $this->deletedAt instanceof DateTime || $this->deletedAt === null
+            ? $this->deletedAt
+            : new DateTime($this->deletedAt);
 
         $this->validate();
     }
@@ -62,6 +68,12 @@ class CategoryEntity
         $this->updatedAt = new DateTime;
 
         $this->validate();
+    }
+
+    public function delete(): void
+    {
+        $this->deletedAt = new DateTime;
+        $this->updatedAt = $this->deletedAt;
     }
 
     public function validate(): void

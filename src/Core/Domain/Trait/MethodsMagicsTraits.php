@@ -31,4 +31,9 @@ trait MethodsMagicsTraits
     {
         return $this->updatedAt->format('Y-m-d H:i:s');
     }
+
+    public function deletedAt(): ?string
+    {
+        return $this->deletedAt?->format('Y-m-d H:i:s');
+    }
 }

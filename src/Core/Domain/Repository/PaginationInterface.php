@@ -27,6 +27,11 @@ interface PaginationInterface
     public function lastPage(): int;
 
     /**
+     * Número da página atual.
+     */
+    public function currentPage(): int;
+
+    /**
      * Número da primeira página disponível.
      */
     public function firstPage(): int;

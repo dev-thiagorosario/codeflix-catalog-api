@@ -13,8 +13,9 @@ use DateTime;
  * @property-read string $name
  * @property-read string $description
  * @property-read bool $isActive
+ * @property-read DateTime $createdAt
+ * @property-read DateTime $updatedAt
  */
-
 class CategoryEntity
 {
     use MethodsMagicsTraits;
@@ -25,6 +26,7 @@ class CategoryEntity
         protected string $description = '',
         protected bool $isActive = true,
         protected DateTime|string|null $createdAt = null,
+        protected DateTime|string|null $updatedAt = null,
     ) {
         $this->id = match (true) {
             $this->id instanceof UuidResolver => $this->id,
@@ -35,6 +37,10 @@ class CategoryEntity
         $this->createdAt = $this->createdAt instanceof DateTime
             ? $this->createdAt
             : new DateTime($this->createdAt ?: 'now');
+
+        $this->updatedAt = $this->updatedAt instanceof DateTime
+            ? $this->updatedAt
+            : new DateTime($this->updatedAt ?: $this->createdAt->format('Y-m-d H:i:s'));
 
         $this->validate();
     }
@@ -53,6 +59,7 @@ class CategoryEntity
     {
         $this->name = $name;
         $this->description = $description;
+        $this->updatedAt = new DateTime;
 
         $this->validate();
     }

@@ -7,6 +7,7 @@ namespace App\Core\Domain\Entity;
 use App\Core\Domain\Resolver\UuidResolver;
 use App\Core\Domain\Trait\MethodsMagicsTraits;
 use App\Core\Domain\Validation\DomainValidation;
+use App\Models\Category;
 use DateTime;
 
 /**
@@ -82,5 +83,18 @@ class CategoryEntity
         DomainValidation::strMaxLength($this->name);
         DomainValidation::strMinLength($this->name);
         DomainValidation::strCanNullAndMaxLength($this->description);
+    }
+
+    public static function fromModel(Category $model): self
+    {
+        return new self(
+            id: $model->id,
+            name: $model->name,
+            description: $model->description ?? '',
+            isActive: (bool) $model->is_active,
+            createdAt: $model->created_at?->format('Y-m-d H:i:s'),
+            updatedAt: $model->updated_at?->format('Y-m-d H:i:s'),
+            deletedAt: $model->deleted_at?->format('Y-m-d H:i:s'),
+        );
     }
 }

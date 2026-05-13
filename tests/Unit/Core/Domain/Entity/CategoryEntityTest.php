@@ -50,6 +50,33 @@ class CategoryEntityTest extends TestCase
         $this->assertSame('2024-01-02 12:30:00', $category->updatedAt());
     }
 
+    public function test_it_accepts_deleted_at_as_datetime_inside_the_entity(): void
+    {
+        $deletedAt = new DateTime('2024-01-03 14:30:00');
+
+        $category = new CategoryEntity(
+            name: 'Movies',
+            deletedAt: $deletedAt,
+        );
+
+        $this->assertSame($deletedAt, $category->deletedAt);
+        $this->assertSame('2024-01-03 14:30:00', $category->deletedAt());
+    }
+
+    public function test_it_marks_category_as_deleted(): void
+    {
+        $category = new CategoryEntity(
+            name: 'Movies',
+            createdAt: '2024-01-01 10:30:00',
+            updatedAt: '2024-01-01 10:30:00',
+        );
+
+        $category->delete();
+
+        $this->assertNotNull($category->deletedAt());
+        $this->assertSame($category->deletedAt(), $category->updatedAt());
+    }
+
     public function test_it_refreshes_updated_at_when_category_is_updated(): void
     {
         $category = new CategoryEntity(

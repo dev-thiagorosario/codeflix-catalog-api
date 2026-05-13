@@ -41,9 +41,9 @@ interface CategoryRepositoryInterface
      * @param string $order Direção da ordenação.
      * @param int $page Página atual.
      * @param int $perPage Quantidade de itens por página.
-     * @return LengthAwarePaginator
+     * @return PaginationInterface
      */
-    public function paginate( string $filter = '', $order = 'DESC', int $page = 1, int $perPage = 10): LengthAwarePaginator;
+    public function paginate( string $filter = '', $order = 'DESC', int $page = 1, int $perPage = 10): PaginationInterface;
 
     /**
      * Atualiza uma Category existente.
@@ -63,9 +63,6 @@ interface CategoryRepositoryInterface
 
     /**
      * Converte um objeto genérico (ex: Model, stdClass) em CategoryEntity.
-     *
-     * Esse método geralmente é utilizado na implementação (Infra),
-     * mas pode ser definido aqui como contrato para padronizar a conversão.
      *
      * @param object $data
      * @return CategoryEntity|null

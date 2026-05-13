@@ -40,7 +40,7 @@ class ListCategoryUsecaseTest extends TestCase
         );
 
         $paginator = new LengthAwarePaginator(
-            items: [$category],
+            items: collect([$category]),
             total: 11,
             perPage: 10,
             currentPage: 2,

@@ -13,7 +13,7 @@ class ListCategoryOutputDTO
         public array $items = [],
         public int $total = 0,
         public int $currentPage = 1,
-        public int $lastPage = 1,
+        public int $lastPage = 15,
         public int $perPage = 10,
     ) {}
 }

@@ -6,7 +6,9 @@ namespace Tests\Unit\Core\Domain\Entity;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Resolver\UuidResolver;
+use App\Models\Category;
 use DateTime;
+use Illuminate\Support\Carbon;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 
@@ -106,5 +108,26 @@ class CategoryEntityTest extends TestCase
         );
 
         $this->assertSame((string) $id, $category->id());
+    }
+
+    public function test_it_creates_entity_from_model_with_nullable_description(): void
+    {
+        $id = (string) UuidResolver::random();
+
+        $model = new Category;
+        $model->setRawAttributes([
+            'id' => $id,
+            'name' => 'Documentaries',
+            'description' => null,
+            'is_active' => true,
+            'created_at' => new Carbon('2026-05-13 10:00:00'),
+            'updated_at' => new Carbon('2026-05-13 10:00:00'),
+        ]);
+
+        $category = CategoryEntity::fromModel($model);
+
+        $this->assertSame($id, $category->id());
+        $this->assertSame('', $category->description);
+        $this->assertTrue($category->isActive);
     }
 }

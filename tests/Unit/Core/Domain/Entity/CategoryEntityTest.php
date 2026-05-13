@@ -23,6 +23,7 @@ class CategoryEntityTest extends TestCase
 
         $this->assertSame($createdAt, $category->createdAt);
         $this->assertSame('2024-01-01 10:30:00', $category->createdAt());
+        $this->assertSame('2024-01-01 10:30:00', $category->updatedAt());
     }
 
     public function test_it_still_accepts_string_dates_and_generates_valid_uuid(): void
@@ -34,6 +35,38 @@ class CategoryEntityTest extends TestCase
 
         $this->assertInstanceOf(DateTime::class, $category->createdAt);
         $this->assertTrue(RamseyUuid::isValid($category->id()));
+    }
+
+    public function test_it_accepts_updated_at_as_datetime_inside_the_entity(): void
+    {
+        $updatedAt = new DateTime('2024-01-02 12:30:00');
+
+        $category = new CategoryEntity(
+            name: 'Movies',
+            updatedAt: $updatedAt,
+        );
+
+        $this->assertSame($updatedAt, $category->updatedAt);
+        $this->assertSame('2024-01-02 12:30:00', $category->updatedAt());
+    }
+
+    public function test_it_refreshes_updated_at_when_category_is_updated(): void
+    {
+        $category = new CategoryEntity(
+            name: 'Movies',
+            createdAt: '2024-01-01 10:30:00',
+            updatedAt: '2024-01-01 10:30:00',
+        );
+
+        $category->update(
+            name: 'Series',
+            description: 'Updated description',
+        );
+
+        $this->assertSame('2024-01-01 10:30:00', $category->createdAt());
+        $this->assertNotSame('2024-01-01 10:30:00', $category->updatedAt());
+        $this->assertSame('Series', $category->name);
+        $this->assertSame('Updated description', $category->description);
     }
 
     public function test_it_accepts_an_existing_uuid_resolver(): void

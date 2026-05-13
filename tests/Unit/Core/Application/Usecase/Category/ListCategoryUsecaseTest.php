@@ -7,8 +7,8 @@ use App\Core\Application\DTO\Category\ListCategoryOutputDTO;
 use App\Core\Application\Usecase\Category\ListCategoryUsecase;
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
+use App\Core\Domain\Repository\PaginationInterface;
 use App\Core\Domain\Resolver\UuidResolver;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -39,12 +39,12 @@ class ListCategoryUsecaseTest extends TestCase
             order: 'ASC',
         );
 
-        $paginator = new LengthAwarePaginator(
-            items: collect([$category]),
-            total: 11,
-            perPage: 10,
-            currentPage: 2,
-        );
+        $paginator = Mockery::mock(PaginationInterface::class);
+        $paginator->shouldReceive('items')->once()->andReturn([$category]);
+        $paginator->shouldReceive('total')->once()->andReturn(11);
+        $paginator->shouldReceive('currentPage')->once()->andReturn(2);
+        $paginator->shouldReceive('lastPage')->once()->andReturn(2);
+        $paginator->shouldReceive('perPage')->once()->andReturn(10);
 
         $categoryRepository = Mockery::mock(CategoryRepositoryInterface::class);
         $categoryRepository

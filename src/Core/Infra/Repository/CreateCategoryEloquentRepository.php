@@ -8,7 +8,7 @@ use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
 use App\Models\Category;
 
-abstract class CreateCategoryRepository implements CategoryRepositoryInterface
+abstract class CreateCategoryEloquentRepository implements CategoryRepositoryInterface
 {
     public function insert(CategoryEntity $category): CategoryEntity
     {

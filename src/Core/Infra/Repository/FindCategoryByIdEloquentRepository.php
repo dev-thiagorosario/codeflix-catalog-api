@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Core\Infra\Repository;
 
 use App\Core\Domain\Entity\CategoryEntity;
-use App\Core\Domain\Repository\CategoryRepositoryInterface;
 use App\Models\Category;
 
-abstract class FindCategoryByIdEloquentRepository implements CategoryRepositoryInterface
+class FindCategoryByIdEloquentRepository
 {
     public function findById(string $id): ?CategoryEntity
     {

@@ -7,17 +7,18 @@ namespace App\Core\Infra\Repository;
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Models\Category;
 
-class CreateCategoryEloquentRepository
+class UpdateCategoryEloquentRepository
 {
-    public function insert(CategoryEntity $category): CategoryEntity
+    public function update(CategoryEntity $category): CategoryEntity
     {
-        $model = Category::query()->create([
-            'id' => $category->id(),
+        $model = Category::query()->findOrFail($category->id());
+
+        $model->update([
             'name' => $category->name,
             'description' => $category->description,
             'is_active' => $category->isActive,
         ]);
 
-        return CategoryEntity::fromModel($model);
+        return CategoryEntity::fromModel($model->refresh());
     }
 }

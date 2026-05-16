@@ -1,12 +1,12 @@
 # Codeflix Catalog API
 
-API do catalogo de videos da plataforma Codeflix, desenvolvida como parte do projeto pratico do curso Full Cycle. O projeto representa o backend administrativo responsavel por gerenciar o catalogo de conteudos, incluindo categorias, generos e videos, seguindo os principios de Clean Architecture para manter as regras de negocio independentes de frameworks, banco de dados e mecanismos de entrega.
+API do catalogo de videos da plataforma Codeflix, desenvolvida como parte dos estudos do curso Full Cycle. O projeto representa o backend administrativo responsavel por organizar o catalogo de conteudos e esta sendo construido com Laravel e Clean Architecture, mantendo as regras de negocio isoladas dos detalhes de framework, banco de dados e entrega HTTP.
 
 ## Visao geral
 
-A imagem de referencia apresenta um diagrama C4 de contexto para o ecossistema Codeflix. Nesse contexto, a plataforma e composta por usuarios assinantes, administradores de assinatura, administradores do catalogo e servicos especializados que se comunicam por HTTPS, JSON, mensageria e replicacao de dados.
+Este repositorio corresponde ao **Backend: Admin do catalogo de videos** dentro do ecossistema Codeflix. A ideia e oferecer a base administrativa que permite manter categorias, generos e videos, alem de preparar integracoes com servicos como encoder, autenticacao e replicacao de dados para a API publica do catalogo.
 
-Este repositorio corresponde ao **Backend: Admin do Catalogo de Videos**, um dos sistemas centrais do dominio de catalogo. Ele e responsavel por expor as capacidades administrativas do catalogo e por manter as regras de negocio isoladas em um nucleo de dominio.
+No estado atual, o desenvolvimento esta concentrado no modulo de **categorias**, com dominio, casos de uso, persistencia via Eloquent, migracao, factory, seeder e testes automatizados.
 
 ```mermaid
 flowchart TB
@@ -40,25 +40,47 @@ flowchart TB
     KafkaConnect -->|"Debezium MySQL"| Subscription
 ```
 
-## Responsabilidade do projeto
+## Funcionalidades implementadas
 
-O objetivo principal desta API e oferecer uma base robusta para administracao do catalogo de videos da Codeflix. A partir dela, o administrador podera evoluir fluxos como:
+### Categorias
 
-- Cadastro, edicao, ativacao e inativacao de categorias.
-- Organizacao do catalogo por generos e categorias.
-- Gerenciamento administrativo de videos.
-- Integracao futura com servicos de encoding por filas.
-- Publicacao ou replicacao de dados do catalogo para outros sistemas da plataforma.
+- Criacao de categorias com UUID, nome, descricao e status ativo/inativo.
+- Validacao de dominio para nome obrigatorio, tamanho minimo e maximo, e descricao opcional com limite de tamanho.
+- Atualizacao de nome e descricao da categoria.
+- Ativacao e desativacao da categoria pela entidade de dominio.
+- Remocao logica com `deleted_at` usando soft delete.
+- Busca de categoria por ID.
+- Listagem de categorias com filtro por nome e ordenacao.
+- Paginacao de categorias no contrato de repositorio.
+- Tratamento de categoria inexistente com excecao de dominio.
+- Conversao entre model Eloquent e entidade de dominio.
+- Persistencia em MySQL por meio do model `Category` e repositores Eloquent.
+- Factory e seeder para popular categorias no banco.
 
-## Clean Architecture
+### Camada de aplicacao
 
-O projeto esta sendo construido com Clean Architecture. A proposta e proteger o dominio da aplicacao contra detalhes externos, mantendo as regras de negocio no centro da solucao.
+- DTOs de entrada e saida para criacao, atualizacao, listagem e remocao de categorias.
+- Casos de uso para criar, listar, atualizar e remover categorias.
+- Interfaces para os casos de uso, permitindo inversao de dependencia.
+- Service Provider dedicado para vincular contratos a implementacoes no container do Laravel.
 
-A estrutura inicial ja evidencia essa separacao:
+### Testes
+
+- Testes unitarios da entidade `CategoryEntity`.
+- Testes dos casos de uso de criacao, listagem, atualizacao e remocao.
+- Testes dos repositorios Eloquent para criar, buscar, listar, atualizar e remover categorias.
+- Cobertura de fluxos felizes e cenarios de erro, como categoria inexistente.
+
+## Arquitetura
+
+O projeto segue Clean Architecture para manter o dominio independente de Laravel e de detalhes de infraestrutura. O Laravel entra como mecanismo de configuracao, container, banco de dados, migrations e futura camada HTTP.
 
 ```text
 src/
 └── Core/
+    ├── Application/
+    │   ├── DTO/
+    │   └── Usecase/
     ├── Domain/
     │   ├── Entity/
     │   ├── Repository/
@@ -66,26 +88,31 @@ src/
     │   ├── Trait/
     │   └── Validation/
     ├── Enum/
-    └── Exception/
+    ├── Exception/
+    └── Infra/
+        ├── Provider/
+        └── Repository/
 ```
 
-### Principios aplicados
+Principios aplicados:
 
-- **Dominio independente**: entidades e validacoes vivem em `src/Core` e nao dependem diretamente do Laravel.
-- **Regras de negocio no centro**: comportamentos como ativar, desativar e atualizar uma categoria pertencem a entidade de dominio.
-- **Contratos antes de implementacoes**: interfaces de repositorio definem dependencias esperadas pelo dominio.
-- **Framework como detalhe**: Laravel atua como mecanismo de entrega, configuracao e infraestrutura.
-- **Testabilidade**: o nucleo de dominio pode ser testado com PHPUnit sem depender de banco, HTTP ou containers.
+- **Dominio independente**: entidades, validacoes e contratos ficam em `src/Core`.
+- **Casos de uso explicitos**: a camada de aplicacao orquestra as operacoes do dominio.
+- **Contratos antes de implementacoes**: usecases dependem de interfaces de repositorio.
+- **Infraestrutura isolada**: Eloquent fica na camada `Infra`, adaptando o banco ao dominio.
+- **Testabilidade**: regras de negocio e persistencia sao verificadas por PHPUnit.
 
 ## Stack
 
 - PHP 8.4
 - Laravel 13
+- Laravel Sanctum
+- Laravel Boost
 - PHPUnit 12
 - Laravel Pint
-- Laravel Boost
 - MySQL 8.4
 - Docker e Nginx
+- Tailwind CSS 4
 
 ## Como executar
 
@@ -97,13 +124,19 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-Com Docker:
+Suba o ambiente com Docker:
 
 ```bash
 docker compose up -d
 ```
 
-Sem Docker, usando o ambiente local:
+Execute as migrations e seeders, se necessario:
+
+```bash
+php artisan migrate --seed
+```
+
+Tambem e possivel iniciar o servidor localmente:
 
 ```bash
 php artisan serve
@@ -111,7 +144,7 @@ php artisan serve
 
 ## Qualidade e testes
 
-Execute os testes automatizados:
+Execute a suite de testes:
 
 ```bash
 php artisan test --compact
@@ -125,4 +158,12 @@ vendor/bin/pint --format agent
 
 ## Status atual
 
-O projeto esta em desenvolvimento. A base atual concentra-se no nucleo de dominio do catalogo, com a entidade `CategoryEntity`, validacoes de dominio, resolucao de UUID e contrato de repositorio. As proximas evolucoes naturais sao as camadas de aplicacao, infraestrutura, persistencia e entrega HTTP da API administrativa.
+O projeto ainda esta em desenvolvimento. A base de categorias ja possui dominio, casos de uso, contratos, implementacao Eloquent e testes, mas os endpoints HTTP administrativos ainda nao foram implementados.
+
+Proximas evolucoes naturais:
+
+- Expor endpoints REST para categorias.
+- Criar Form Requests, Resources e Controllers da API administrativa.
+- Evoluir os modulos de generos e videos.
+- Adicionar autenticacao/autorizacao para o admin do catalogo.
+- Preparar integracoes futuras com encoder, filas e replicacao de dados.

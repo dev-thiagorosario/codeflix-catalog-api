@@ -13,7 +13,7 @@ use App\Core\Application\Usecase\Category\ListCategoryUsecaseInterface;
 use App\Core\Application\Usecase\Category\UpdateCategoryUsecase;
 use App\Core\Application\Usecase\Category\UpdateCategoryUsecaseInterface;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
-use App\Core\Infra\Repository\CategoryEloquentRepository;
+use App\Core\Infra\Repository\Category\CategoryEloquentRepository;
 use Illuminate\Support\ServiceProvider;
 
 class CategoryServiceProvider extends ServiceProvider

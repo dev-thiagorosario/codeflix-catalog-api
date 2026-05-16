@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Repository;
+namespace App\Core\Infra\Repository\Category;
 
 use App\Models\Category;
 

@@ -6,7 +6,7 @@ namespace Tests\Unit\Http\Support;
 
 use App\Core\Exception\InvalidJsendStatusException;
 use App\Core\Exception\JsendErrorMessageRequiredException;
-use App\Http\Support\ResponseJsend;
+use App\Http\Helper\ResponseJsend;
 use Tests\TestCase;
 
 class ResponseJsendTest extends TestCase

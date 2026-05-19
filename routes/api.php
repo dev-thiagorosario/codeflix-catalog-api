@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Category\CreateCategoryController;
+use App\Http\Controllers\Category\DeleteCategoryController;
 use App\Http\Controllers\Category\ListCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
 use Illuminate\Http\Request;
@@ -13,3 +14,4 @@ Route::get('/user', function (Request $request) {
 Route::post('/create-category', CreateCategoryController::class)->middleware('auth:sanctum');
 Route::get('/list-categories', ListCategoryController::class)->middleware('auth:sanctum');
 Route::put('/update-category/{id}', UpdateCategoryController::class)->middleware('auth:sanctum');
+Route::delete('/delete-category/{id}', DeleteCategoryController::class)->middleware('auth:sanctum');

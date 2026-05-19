@@ -7,7 +7,7 @@ namespace Tests\Unit\Http\Controllers\Category;
 use App\Core\Application\DTO\Category\CreateCategoryInputDTO;
 use App\Core\Application\DTO\Category\CreateCategoryOutputDTO;
 use App\Core\Application\Usecase\Category\CreateCategoryUsecaseInterface;
-use App\Core\Infra\Adapter\Category\CreateCategoryAdapterInterface;
+use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
 use App\Http\Controllers\Category\CreateCategoryController;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use Mockery;
@@ -58,7 +58,7 @@ class CreateCategoryControllerTest extends TestCase
             ->once()
             ->andReturn($validated);
 
-        $adapter = Mockery::mock(CreateCategoryAdapterInterface::class);
+        $adapter = Mockery::mock(CreateCategoryDataAdapterInterface::class);
         $adapter
             ->shouldReceive('fromArray')
             ->once()

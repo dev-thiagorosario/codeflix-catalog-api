@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Core\Infra\Repository\Category;
 
 use App\Core\Domain\Entity\CategoryEntity;
+use App\Core\Domain\Repository\PaginationInterface;
 use App\Core\Infra\Repository\Category\FindAllCategoriesEloquentRepository;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -46,5 +47,26 @@ class FindAllCategoriesEloquentRepositoryTest extends TestCase
             fn (CategoryEntity $category): string => $category->name,
             $result,
         ));
+    }
+
+    public function test_it_paginates_filtered_categories(): void
+    {
+        Category::factory()->create(['name' => 'Video Games']);
+        Category::factory()->create(['name' => 'Music']);
+        Category::factory()->create(['name' => 'Video Courses']);
+
+        $repository = new FindAllCategoriesEloquentRepository;
+
+        $result = $repository->paginate(filter: 'Video', order: 'ASC', page: 1, perPage: 1);
+
+        $this->assertInstanceOf(PaginationInterface::class, $result);
+        $this->assertSame(2, $result->total());
+        $this->assertSame(1, $result->currentPage());
+        $this->assertSame(2, $result->lastPage());
+        $this->assertSame(1, $result->perPage());
+        $this->assertSame(1, $result->from());
+        $this->assertSame(1, $result->to());
+        $this->assertContainsOnlyInstancesOf(CategoryEntity::class, $result->items());
+        $this->assertSame('Video Courses', $result->items()[0]->name);
     }
 }

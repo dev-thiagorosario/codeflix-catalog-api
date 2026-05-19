@@ -6,6 +6,7 @@ namespace App\Core\Exception;
 
 use App\Core\Enum\CodeExceptionEnum;
 use RuntimeException;
+use Throwable;
 
 class CreateCategoryException extends RuntimeException
 {

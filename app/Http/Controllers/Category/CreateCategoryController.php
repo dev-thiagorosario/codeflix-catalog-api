@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Category;
 
 use App\Core\Application\Usecase\Category\CreateCategoryUsecaseInterface;
 use App\Core\Exception\CreateCategoryException;
-use App\Core\Infra\Adapter\Category\CreateCategoryAdapterInterface;
+use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseJsend;
 use App\Http\Requests\Category\CreateCategoryRequest;
@@ -16,7 +16,7 @@ class CreateCategoryController extends Controller
 {
     public function __construct(
         private readonly CreateCategoryUsecaseInterface $usecase,
-        private readonly CreateCategoryAdapterInterface $adapter,
+        private readonly CreateCategoryDataAdapterInterface $adapter,
     ) {}
 
     public function __invoke(CreateCategoryRequest $request): JsonResponse

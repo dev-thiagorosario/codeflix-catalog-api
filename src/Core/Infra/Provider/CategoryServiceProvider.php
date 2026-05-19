@@ -17,6 +17,8 @@ use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapter;
 use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
 use App\Core\Infra\Adapter\Category\ListCategoryDataAdapter;
 use App\Core\Infra\Adapter\Category\ListCategoryDataAdapterInterface;
+use App\Core\Infra\Adapter\Category\UpdateCategoryDataAdapter;
+use App\Core\Infra\Adapter\Category\UpdateCategoryDataAdapterInterface;
 use App\Core\Infra\Repository\Category\CategoryEloquentRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +30,7 @@ class CategoryServiceProvider extends ServiceProvider
 
         $this->app->bind(CreateCategoryDataAdapterInterface::class, CreateCategoryDataAdapter::class);
         $this->app->bind(ListCategoryDataAdapterInterface::class, ListCategoryDataAdapter::class);
+        $this->app->bind(UpdateCategoryDataAdapterInterface::class, UpdateCategoryDataAdapter::class);
 
         $this->app->bind(CreateCategoryUsecaseInterface::class, CreateCategoryUsecase::class);
         $this->app->bind(DeleteCategoryUsecaseInterface::class, DeleteCategoryUsecase::class);

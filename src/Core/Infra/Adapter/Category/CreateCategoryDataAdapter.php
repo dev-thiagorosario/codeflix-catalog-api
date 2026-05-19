@@ -7,7 +7,7 @@ namespace App\Core\Infra\Adapter\Category;
 use App\Core\Application\DTO\Category\CreateCategoryInputDTO;
 use App\Core\Application\DTO\Category\CreateCategoryOutputDTO;
 
-class CreateCategoryAdapter implements CreateCategoryAdapterInterface
+class CreateCategoryDataAdapter implements CreateCategoryDataAdapterInterface
 {
     /**
      * @param  array{name: string, description?: string|null, is_active?: bool|int|string}  $data

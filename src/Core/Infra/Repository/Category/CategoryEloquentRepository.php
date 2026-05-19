@@ -32,12 +32,12 @@ final readonly class CategoryEloquentRepository implements CategoryRepositoryInt
     /**
      * @return CategoryEntity[]
      */
-    public function findAll(string $filter = '', $order = 'DESC'): array
+    public function findAll(string $filter = '', string $order = 'DESC'): array
     {
         return $this->findAllCategoriesRepository->findAll($filter, $order);
     }
 
-    public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $perPage = 10): PaginationInterface
+    public function paginate(string $filter = '', string $order = 'DESC', int $page = 1, int $perPage = 10): PaginationInterface
     {
         return $this->findAllCategoriesRepository->paginate($filter, $order, $page, $perPage);
     }

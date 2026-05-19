@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core\Domain\Repository;
 
+use App\Core\Domain\Entity\CategoryEntity;
+
 /**
  * Contrato para conjuntos paginados usados pelas implementações de repositório.
  */
@@ -12,7 +14,7 @@ interface PaginationInterface
     /**
      * Retorna os itens da página atual.
      *
-     * @return stdClass[]
+     * @return CategoryEntity[]
      */
     public function items(): array;
 

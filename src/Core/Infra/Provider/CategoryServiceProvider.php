@@ -13,8 +13,10 @@ use App\Core\Application\Usecase\Category\ListCategoryUsecaseInterface;
 use App\Core\Application\Usecase\Category\UpdateCategoryUsecase;
 use App\Core\Application\Usecase\Category\UpdateCategoryUsecaseInterface;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
-use App\Core\Infra\Adapter\Category\CreateCategoryAdapter;
-use App\Core\Infra\Adapter\Category\CreateCategoryAdapterInterface;
+use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapter;
+use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
+use App\Core\Infra\Adapter\Category\ListCategoryDataAdapter;
+use App\Core\Infra\Adapter\Category\ListCategoryDataAdapterInterface;
 use App\Core\Infra\Repository\Category\CategoryEloquentRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,7 +26,8 @@ class CategoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(CategoryRepositoryInterface::class, CategoryEloquentRepository::class);
 
-        $this->app->bind(CreateCategoryAdapterInterface::class, CreateCategoryAdapter::class);
+        $this->app->bind(CreateCategoryDataAdapterInterface::class, CreateCategoryDataAdapter::class);
+        $this->app->bind(ListCategoryDataAdapterInterface::class, ListCategoryDataAdapter::class);
 
         $this->app->bind(CreateCategoryUsecaseInterface::class, CreateCategoryUsecase::class);
         $this->app->bind(DeleteCategoryUsecaseInterface::class, DeleteCategoryUsecase::class);

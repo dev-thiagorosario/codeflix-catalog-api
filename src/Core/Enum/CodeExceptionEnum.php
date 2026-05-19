@@ -11,4 +11,5 @@ enum CodeExceptionEnum: int
     case CREATE_CATEGORY_ERROR = 1005;
     case INVALID_JSEND_STATUS = 1006;
     case JSEND_ERROR_MESSAGE_REQUIRED = 1007;
+    case ERROR_LIST_CATEGORY = 1008;
 }

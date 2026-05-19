@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Category;
 
-use App\Core\Application\Usecase\Category\CreateCategoryUsecaseInterface;
-use App\Core\Exception\CreateCategoryException;
-use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
+use App\Core\Application\Usecase\Category\ListCategoryUsecaseInterface;
+use App\Core\Exception\ListCategoryException;
+use App\Core\Infra\Adapter\Category\ListCategoryDataAdapterInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseJsend;
-use App\Http\Requests\Category\CreateCategoryRequest;
+use App\Http\Requests\Category\ListCategoryRequest;
 use Illuminate\Http\JsonResponse;
 
-class CreateCategoryController extends Controller
+class ListCategoryController extends Controller
 {
     public function __construct(
-        private readonly CreateCategoryUsecaseInterface $usecase,
-        private readonly CreateCategoryDataAdapterInterface $adapter,
+        private readonly ListCategoryUsecaseInterface $usecase,
+        private readonly ListCategoryDataAdapterInterface $adapter,
     ) {}
 
-    public function __invoke(CreateCategoryRequest $request): JsonResponse
+    public function __invoke(ListCategoryRequest $request): JsonResponse
     {
         try {
             $input = $this->adapter->fromArray($request->validated());
@@ -29,8 +29,8 @@ class CreateCategoryController extends Controller
             $response = new ResponseJsend($this->adapter->toArray($result));
 
             return response()
-                ->json($response->toArray(), 201);
-        } catch (CreateCategoryException $e) {
+                ->json($response->toArray());
+        } catch (ListCategoryException $e) {
             $response = new ResponseJsend(
                 status: 'error',
                 message: $e->getMessage(),
@@ -38,7 +38,7 @@ class CreateCategoryController extends Controller
             );
 
             return response()
-                ->json($response->toArray(), 400);
+                ->json($response->toArray(), 500);
         } catch (\Throwable $e) {
             $response = new ResponseJsend(
                 status: 'error',

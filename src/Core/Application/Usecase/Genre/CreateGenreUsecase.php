@@ -29,6 +29,7 @@ final class CreateGenreUsecase implements CreateGenreUsecaseInterface
             id: $genreCreated->id(),
             name: $genreCreated->name,
             isActive: $genreCreated->isActive,
+            createdAt: $genreCreated->createdAt(),
         );
     }
 }

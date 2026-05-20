@@ -11,5 +11,6 @@ class CreateGenreOutputDTO
         public string $id,
         public string $name,
         public bool $isActive,
+        public string $createdAt,
     ) {}
 }

@@ -6,6 +6,7 @@ namespace App\Core\Application\Usecase\Genre;
 
 use App\Core\Application\DTO\Genre\ListGenreInputDTO;
 use App\Core\Application\DTO\Genre\ListGenreOutputDTO;
+use App\Core\Application\Interfaces\Genre\ListGenreUsecaseInterface;
 use App\Core\Domain\Entity\GenreEntity;
 use App\Core\Domain\Repository\GenreRepositoryInterface;
 

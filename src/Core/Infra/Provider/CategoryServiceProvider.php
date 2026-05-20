@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Core\Infra\Provider;
 
+use App\Core\Application\Interfaces\Category\CreateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\CreateCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Category\DeleteCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Category\ListCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\ListCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Category\UpdateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\UpdateCategoryUsecaseInterface;
 use App\Core\Application\Usecase\Category\CreateCategoryUsecase;
-use App\Core\Application\Usecase\Category\CreateCategoryUsecaseInterface;
 use App\Core\Application\Usecase\Category\DeleteCategoryUsecase;
-use App\Core\Application\Usecase\Category\DeleteCategoryUsecaseInterface;
 use App\Core\Application\Usecase\Category\ListCategoryUsecase;
-use App\Core\Application\Usecase\Category\ListCategoryUsecaseInterface;
 use App\Core\Application\Usecase\Category\UpdateCategoryUsecase;
-use App\Core\Application\Usecase\Category\UpdateCategoryUsecaseInterface;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
 use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapter;
-use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
 use App\Core\Infra\Adapter\Category\ListCategoryDataAdapter;
-use App\Core\Infra\Adapter\Category\ListCategoryDataAdapterInterface;
 use App\Core\Infra\Adapter\Category\UpdateCategoryDataAdapter;
-use App\Core\Infra\Adapter\Category\UpdateCategoryDataAdapterInterface;
 use App\Core\Infra\Repository\Category\CategoryEloquentRepository;
 use Illuminate\Support\ServiceProvider;
 

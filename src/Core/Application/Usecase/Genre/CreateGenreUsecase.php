@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Core\Application\Usecase\Genre;
 
-
-use App\Core\Domain\Entity\GenreEntity;
-use App\Core\Domain\Repository\GenreRepositoryInterface;
 use App\Core\Application\DTO\Genre\CreateGenreInputDTO;
 use App\Core\Application\DTO\Genre\CreateGenreOutputDTO;
+use App\Core\Application\Interfaces\Genre\CreateGenreUsecaseInterface;
+use App\Core\Domain\Entity\GenreEntity;
+use App\Core\Domain\Repository\GenreRepositoryInterface;
 
 final class CreateGenreUsecase implements CreateGenreUsecaseInterface
 {

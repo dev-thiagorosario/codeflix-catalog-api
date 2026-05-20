@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Category;
 
-use App\Core\Application\Usecase\Category\CreateCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Category\CreateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\CreateCategoryUsecaseInterface;
 use App\Core\Exception\CreateCategoryException;
-use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseJsend;
 use App\Http\Requests\Category\CreateCategoryRequest;

@@ -6,8 +6,8 @@ namespace Tests\Unit\Http\Controllers\Category;
 
 use App\Core\Application\DTO\Category\CreateCategoryInputDTO;
 use App\Core\Application\DTO\Category\CreateCategoryOutputDTO;
-use App\Core\Application\Usecase\Category\CreateCategoryUsecaseInterface;
-use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\CreateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\CreateCategoryUsecaseInterface;
 use App\Http\Controllers\Category\CreateCategoryController;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use Mockery;

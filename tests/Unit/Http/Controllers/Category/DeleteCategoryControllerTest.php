@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Http\Controllers\Category;
 
 use App\Core\Application\DTO\Category\DeleteCategoryInputDTO;
-use App\Core\Application\Usecase\Category\DeleteCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Category\DeleteCategoryUsecaseInterface;
 use App\Core\Exception\CategoryNotFoundException;
 use App\Http\Controllers\Category\DeleteCategoryController;
 use App\Http\Requests\Category\DeleteCategoryRequest;

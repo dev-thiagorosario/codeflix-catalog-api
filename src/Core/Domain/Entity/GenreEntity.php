@@ -13,6 +13,7 @@ use DateTime;
  * @property-read string $name
  * @property-read bool $isActive
  * @property-read DateTime $createdAt
+ * @property-read DateTime $updatedAt
  * @property-read array<int, string> $categoriesId
  */
 class GenreEntity
@@ -29,9 +30,11 @@ class GenreEntity
         protected string $name = '',
         protected bool $isActive = true,
         protected ?DateTime $createdAt = null,
+        protected ?DateTime $updatedAt = null,
     ) {
         $this->id ??= UuidResolver::random();
         $this->createdAt ??= new DateTime;
+        $this->updatedAt ??= new DateTime($this->createdAt->format('Y-m-d H:i:s'));
 
         $this->validate();
     }
@@ -49,6 +52,7 @@ class GenreEntity
     public function update(string $name): void
     {
         $this->name = $name;
+        $this->updatedAt = new DateTime;
 
         $this->validate();
     }

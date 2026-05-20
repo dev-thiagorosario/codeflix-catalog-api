@@ -1,0 +1,28 @@
+info:
+  name: Create Category
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:8000/api/create-category
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Videos",
+        "description": "Fun Videos",
+        "is_active": true
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

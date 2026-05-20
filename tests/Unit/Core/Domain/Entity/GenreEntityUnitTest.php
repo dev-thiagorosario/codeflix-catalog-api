@@ -17,22 +17,26 @@ class GenreEntityUnitTest extends TestCase
     {
         $uuid = (string) UuidResolver::random();
         $createdAt = new DateTime('2026-05-19 10:30:00');
+        $updatedAt = new DateTime('2026-05-20 10:30:00');
 
         $genre = new GenreEntity(
             id: new UuidResolver($uuid),
             name: 'Genre 1',
             isActive: true,
             createdAt: $createdAt,
+            updatedAt: $updatedAt,
         );
 
         $this->assertSame($uuid, $genre->id());
         $this->assertSame('Genre 1', $genre->name);
         $this->assertTrue($genre->isActive);
         $this->assertSame($createdAt, $genre->createdAt);
+        $this->assertSame($updatedAt, $genre->updatedAt);
         $this->assertSame('2026-05-19 10:30:00', $genre->createdAt());
+        $this->assertSame('2026-05-20 10:30:00', $genre->updatedAt());
     }
 
-    public function test_it_generates_default_id_and_created_at(): void
+    public function test_it_generates_default_id_and_timestamps(): void
     {
         $genre = new GenreEntity(
             name: 'Genre 1',
@@ -40,6 +44,8 @@ class GenreEntityUnitTest extends TestCase
 
         $this->assertTrue(RamseyUuid::isValid($genre->id()));
         $this->assertInstanceOf(DateTime::class, $genre->createdAt);
+        $this->assertInstanceOf(DateTime::class, $genre->updatedAt);
+        $this->assertSame($genre->createdAt(), $genre->updatedAt());
         $this->assertTrue($genre->isActive);
     }
 
@@ -80,11 +86,14 @@ class GenreEntityUnitTest extends TestCase
     {
         $genre = new GenreEntity(
             name: 'Genre 1',
+            createdAt: new DateTime('2026-05-19 10:30:00'),
+            updatedAt: new DateTime('2026-05-19 10:30:00'),
         );
 
         $genre->update('Updated Genre');
 
         $this->assertSame('Updated Genre', $genre->name);
+        $this->assertNotSame('2026-05-19 10:30:00', $genre->updatedAt());
     }
 
     public function test_it_adds_category_id_to_genre(): void

@@ -13,4 +13,5 @@ enum CodeExceptionEnum: int
     case JSEND_ERROR_MESSAGE_REQUIRED = 1007;
     case ERROR_LIST_CATEGORY = 1008;
     case ERROR_UPDATE_CATEGORY = 1009;
+    case GENRE_NOT_FOUND = 1010;
 }

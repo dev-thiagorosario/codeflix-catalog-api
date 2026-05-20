@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Adapter\Category;
+namespace App\Core\Application\Interfaces\Category;
 
 use App\Core\Application\DTO\Category\ListCategoryInputDTO;
 use App\Core\Application\DTO\Category\ListCategoryOutputDTO;

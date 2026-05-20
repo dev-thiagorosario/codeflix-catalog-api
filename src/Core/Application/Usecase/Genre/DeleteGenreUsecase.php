@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core\Application\Usecase\Genre;
 
 use App\Core\Application\DTO\Genre\DeleteGenreInputDTO;
+use App\Core\Application\Interfaces\Genre\DeleteGenreUsecaseInterface;
 use App\Core\Domain\Repository\GenreRepositoryInterface;
 use App\Core\Exception\GenreNotFoundException;
 

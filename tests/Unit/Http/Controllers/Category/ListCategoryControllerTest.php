@@ -6,8 +6,8 @@ namespace Tests\Unit\Http\Controllers\Category;
 
 use App\Core\Application\DTO\Category\ListCategoryInputDTO;
 use App\Core\Application\DTO\Category\ListCategoryOutputDTO;
-use App\Core\Application\Usecase\Category\ListCategoryUsecaseInterface;
-use App\Core\Infra\Adapter\Category\ListCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\ListCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\ListCategoryUsecaseInterface;
 use App\Http\Controllers\Category\ListCategoryController;
 use App\Http\Requests\Category\ListCategoryRequest;
 use Mockery;

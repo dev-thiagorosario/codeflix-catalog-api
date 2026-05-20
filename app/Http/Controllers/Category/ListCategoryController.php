@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Category;
 
-use App\Core\Application\Usecase\Category\ListCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Category\ListCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Category\ListCategoryUsecaseInterface;
 use App\Core\Exception\ListCategoryException;
-use App\Core\Infra\Adapter\Category\ListCategoryDataAdapterInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseJsend;
 use App\Http\Requests\Category\ListCategoryRequest;

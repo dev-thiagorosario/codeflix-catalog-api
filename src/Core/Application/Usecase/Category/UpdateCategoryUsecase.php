@@ -6,6 +6,7 @@ namespace App\Core\Application\Usecase\Category;
 
 use App\Core\Application\DTO\Category\UpdateCategoryInputDTO;
 use App\Core\Application\DTO\Category\UpdateCategoryOutputDTO;
+use App\Core\Application\Interfaces\Category\UpdateCategoryUsecaseInterface;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
 use App\Core\Exception\CategoryNotFoundException;
 

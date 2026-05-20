@@ -6,6 +6,7 @@ namespace App\Core\Infra\Adapter\Category;
 
 use App\Core\Application\DTO\Category\CreateCategoryInputDTO;
 use App\Core\Application\DTO\Category\CreateCategoryOutputDTO;
+use App\Core\Application\Interfaces\Category\CreateCategoryDataAdapterInterface;
 
 class CreateCategoryDataAdapter implements CreateCategoryDataAdapterInterface
 {

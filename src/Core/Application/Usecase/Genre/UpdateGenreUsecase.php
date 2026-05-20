@@ -6,6 +6,7 @@ namespace App\Core\Application\Usecase\Genre;
 
 use App\Core\Application\DTO\Genre\UpdateGenreInputDTO;
 use App\Core\Application\DTO\Genre\UpdateGenreOutputDTO;
+use App\Core\Application\Interfaces\Genre\UpdateGenreUsecaseInterface;
 use App\Core\Domain\Repository\GenreRepositoryInterface;
 use App\Core\Exception\GenreNotFoundException;
 

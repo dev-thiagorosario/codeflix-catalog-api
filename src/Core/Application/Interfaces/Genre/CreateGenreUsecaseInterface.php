@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Application\Usecase\Genre;
+namespace App\Core\Application\Interfaces\Genre;
 
 use App\Core\Application\DTO\Genre\CreateGenreInputDTO;
 use App\Core\Application\DTO\Genre\CreateGenreOutputDTO;

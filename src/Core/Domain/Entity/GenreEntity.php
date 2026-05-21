@@ -7,13 +7,17 @@ namespace App\Core\Domain\Entity;
 use App\Core\Domain\Resolver\UuidResolver;
 use App\Core\Domain\Trait\MethodsMagicsTraits;
 use App\Core\Domain\Validation\DomainValidation;
+use App\Models\Category;
+use App\Models\Genre;
 use DateTime;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 /**
  * @property-read string $name
  * @property-read bool $isActive
  * @property-read DateTime $createdAt
  * @property-read DateTime $updatedAt
+ * @property-read DateTime|null $deletedAt
  * @property-read array<int, string> $categoriesId
  */
 class GenreEntity
@@ -24,16 +28,32 @@ class GenreEntity
      * @param  array<int, string>  $categoriesId
      */
     public function __construct(
-        protected ?UuidResolver $id = null,
+        protected UuidResolver|string|null $id = null,
         protected string $name = '',
         protected bool $isActive = true,
         protected array $categoriesId = [],
-        protected ?DateTime $createdAt = null,
-        protected ?DateTime $updatedAt = null,
+        protected DateTime|string|null $createdAt = null,
+        protected DateTime|string|null $updatedAt = null,
+        protected DateTime|string|null $deletedAt = null,
     ) {
-        $this->id ??= UuidResolver::random();
-        $this->createdAt ??= new DateTime;
-        $this->updatedAt ??= new DateTime($this->createdAt->format('Y-m-d H:i:s'));
+        $this->id = match (true) {
+            $this->id instanceof UuidResolver => $this->id,
+            is_string($this->id) => new UuidResolver($this->id),
+            default => UuidResolver::random(),
+        };
+
+        $this->createdAt = $this->createdAt instanceof DateTime
+            ? $this->createdAt
+            : new DateTime($this->createdAt ?: 'now');
+
+        $this->updatedAt = $this->updatedAt instanceof DateTime
+            ? $this->updatedAt
+            : new DateTime($this->updatedAt ?: $this->createdAt->format('Y-m-d H:i:s'));
+
+        $this->deletedAt = $this->deletedAt instanceof DateTime || $this->deletedAt === null
+            ? $this->deletedAt
+            : new DateTime($this->deletedAt);
+
         $this->categoriesId = array_values(array_unique($this->categoriesId));
 
         $this->validate();
@@ -84,5 +104,33 @@ class GenreEntity
         DomainValidation::notNull($this->name);
         DomainValidation::strMaxLength($this->name, 255);
         DomainValidation::strMinLength($this->name, 3);
+    }
+
+    public static function fromModel(Genre $model): self
+    {
+        return new self(
+            id: $model->id,
+            name: $model->name,
+            isActive: (bool) $model->is_active,
+            categoriesId: self::categoriesIdFromModel($model),
+            createdAt: $model->created_at?->format('Y-m-d H:i:s'),
+            updatedAt: $model->updated_at?->format('Y-m-d H:i:s'),
+            deletedAt: $model->deleted_at?->format('Y-m-d H:i:s'),
+        );
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private static function categoriesIdFromModel(Genre $model): array
+    {
+        if (! $model->relationLoaded('categories')) {
+            return [];
+        }
+
+        /** @var EloquentCollection<int, Category> $categories */
+        $categories = $model->getRelation('categories');
+
+        return $categories->pluck('id')->all();
     }
 }

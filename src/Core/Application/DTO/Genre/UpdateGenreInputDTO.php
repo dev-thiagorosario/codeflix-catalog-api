@@ -9,6 +9,7 @@ class UpdateGenreInputDTO
     public function __construct(
         public string $id,
         public string $name,
+        public array $categoriesIds,
         public ?bool $isActive = null,
     ) {}
 }

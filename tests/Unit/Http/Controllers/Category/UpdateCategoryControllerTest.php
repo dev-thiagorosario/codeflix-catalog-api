@@ -6,8 +6,8 @@ namespace Tests\Unit\Http\Controllers\Category;
 
 use App\Core\Application\DTO\Category\UpdateCategoryInputDTO;
 use App\Core\Application\DTO\Category\UpdateCategoryOutputDTO;
-use App\Core\Application\Interfaces\Category\UpdateCategoryDataAdapterInterface;
-use App\Core\Application\Interfaces\Category\UpdateCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Adapter\Category\UpdateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Usecase\Category\UpdateCategoryUsecaseInterface;
 use App\Http\Controllers\Category\UpdateCategoryController;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use Mockery;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Category;
 
 use App\Core\Application\DTO\Category\DeleteCategoryInputDTO;
-use App\Core\Application\Interfaces\Category\DeleteCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Usecase\Category\DeleteCategoryUsecaseInterface;
 use App\Core\Exception\CategoryNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseJsend;

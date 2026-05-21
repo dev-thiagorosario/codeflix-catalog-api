@@ -17,6 +17,7 @@ final readonly class CategoryEloquentRepository implements CategoryRepositoryInt
         private FindAllCategoriesEloquentRepository $findAllCategoriesRepository,
         private UpdateCategoryEloquentRepository $updateCategoryRepository,
         private DeleteCategoryEloquentRepository $deleteCategoryRepository,
+        private GetIdsByCategoryIdsEloquentRepository $getIdsByCategoryIdsRepository
     ) {}
 
     public function insert(CategoryEntity $category): CategoryEntity
@@ -27,6 +28,11 @@ final readonly class CategoryEloquentRepository implements CategoryRepositoryInt
     public function findById(string $id): ?CategoryEntity
     {
         return $this->findCategoryByIdRepository->findById($id);
+    }
+
+    public function getIdsByCategoryIds(array $categoryIds = []): array
+    {
+        return $this->getIdsByCategoryIdsRepository->getIdsByCategoryIds($categoryIds);
     }
 
     /**

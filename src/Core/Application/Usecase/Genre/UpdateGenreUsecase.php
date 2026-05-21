@@ -38,11 +38,17 @@ final class UpdateGenreUsecase implements UpdateGenreUsecaseInterface
                     : $genre->deactivate();
             }
 
-            foreach ($input->categoriesIds as $categoryId) {
+            $categoriesIdsToAdd = $input->categoriesIdsToAdd ?? [];
+
+            foreach ($categoriesIdsToAdd as $categoryId) {
                 $genre->addCategory($categoryId);
             }
 
-            $this->service->validate($input->categoriesIds);
+            foreach ($input->categoriesIdsToRemove ?? [] as $categoryId) {
+                $genre->removeCategory($categoryId);
+            }
+
+            $this->service->validate($categoriesIdsToAdd);
 
             $genreUpdated = $this->repository->update($genre);
 
@@ -55,7 +61,7 @@ final class UpdateGenreUsecase implements UpdateGenreUsecaseInterface
                 updatedAt: $genreUpdated->updatedAt(),
             );
 
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->transaction->rollback();
             throw $e;
         }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Core\Infra\Provider;
 
+use App\Core\Application\Interfaces\Adapter\Genre\CreateGenreDataAdapterInterface;
+use App\Core\Application\Interfaces\Adapter\Genre\ListGenresDataAdapterInterface;
+use App\Core\Application\Interfaces\Adapter\Genre\UpdateGenreDataAdapterInterface;
 use App\Core\Application\Interfaces\Service\ValidateCategoryIdServiceInterface;
 use App\Core\Application\Interfaces\TransactionInterface;
 use App\Core\Application\Interfaces\Usecase\Genre\CreateGenreUsecaseInterface;
@@ -18,6 +21,9 @@ use App\Core\Application\Usecase\Genre\ListGenresUsecase;
 use App\Core\Application\Usecase\Genre\ListGenreUsecase;
 use App\Core\Application\Usecase\Genre\UpdateGenreUsecase;
 use App\Core\Domain\Repository\GenreRepositoryInterface;
+use App\Core\Infra\Adapter\Genre\CreateGenreDataAdapter;
+use App\Core\Infra\Adapter\Genre\ListGenresDataAdapter;
+use App\Core\Infra\Adapter\Genre\UpdateGenreDataAdapter;
 use App\Core\Infra\Repositories\DBTransaction\DBTransaction;
 use App\Core\Infra\Repositories\Gateway\GenreGatewayRepository;
 use Tests\TestCase;
@@ -39,6 +45,21 @@ class GenreServiceProviderTest extends TestCase
         $this->assertInstanceOf(
             DBTransaction::class,
             $this->app->make(TransactionInterface::class)
+        );
+
+        $this->assertInstanceOf(
+            CreateGenreDataAdapter::class,
+            $this->app->make(CreateGenreDataAdapterInterface::class)
+        );
+
+        $this->assertInstanceOf(
+            ListGenresDataAdapter::class,
+            $this->app->make(ListGenresDataAdapterInterface::class)
+        );
+
+        $this->assertInstanceOf(
+            UpdateGenreDataAdapter::class,
+            $this->app->make(UpdateGenreDataAdapterInterface::class)
         );
 
         $this->assertInstanceOf(

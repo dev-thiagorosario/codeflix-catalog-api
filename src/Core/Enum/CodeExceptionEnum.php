@@ -14,4 +14,8 @@ enum CodeExceptionEnum: int
     case ERROR_LIST_CATEGORY = 1008;
     case ERROR_UPDATE_CATEGORY = 1009;
     case GENRE_NOT_FOUND = 1010;
+    case ERROR_CREATE_GENRE = 1011;
+    case ERROR_UPDATE_GENRE = 1012;
+    case ERROR_DELETE_GENRE = 1013;
+    case ERROR_LIST_GENRES = 1014;
 }

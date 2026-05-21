@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Core\Infra\Provider;
 
+use App\Core\Application\Interfaces\Adapter\Genre\CreateGenreDataAdapterInterface;
+use App\Core\Application\Interfaces\Adapter\Genre\ListGenresDataAdapterInterface;
+use App\Core\Application\Interfaces\Adapter\Genre\UpdateGenreDataAdapterInterface;
 use App\Core\Application\Interfaces\Service\ValidateCategoryIdServiceInterface;
 use App\Core\Application\Interfaces\TransactionInterface;
 use App\Core\Application\Interfaces\Usecase\Genre\CreateGenreUsecaseInterface;
@@ -18,6 +21,9 @@ use App\Core\Application\Usecase\Genre\ListGenresUsecase;
 use App\Core\Application\Usecase\Genre\ListGenreUsecase;
 use App\Core\Application\Usecase\Genre\UpdateGenreUsecase;
 use App\Core\Domain\Repository\GenreRepositoryInterface;
+use App\Core\Infra\Adapter\Genre\CreateGenreDataAdapter;
+use App\Core\Infra\Adapter\Genre\ListGenresDataAdapter;
+use App\Core\Infra\Adapter\Genre\UpdateGenreDataAdapter;
 use App\Core\Infra\Repositories\DBTransaction\DBTransaction;
 use App\Core\Infra\Repositories\Gateway\GenreGatewayRepository;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +36,10 @@ class GenreServiceProvider extends ServiceProvider
 
         $this->app->bind(ValidateCategoryIdServiceInterface::class, ValidateCategoryIdService::class);
         $this->app->bind(TransactionInterface::class, DBTransaction::class);
+
+        $this->app->bind(CreateGenreDataAdapterInterface::class, CreateGenreDataAdapter::class);
+        $this->app->bind(ListGenresDataAdapterInterface::class, ListGenresDataAdapter::class);
+        $this->app->bind(UpdateGenreDataAdapterInterface::class, UpdateGenreDataAdapter::class);
 
         $this->app->bind(CreateGenreUsecaseInterface::class, CreateGenreUsecase::class);
         $this->app->bind(DeleteGenreUsecaseInterface::class, DeleteGenreUsecase::class);

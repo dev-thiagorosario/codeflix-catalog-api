@@ -4,6 +4,10 @@ use App\Http\Controllers\Category\CreateCategoryController;
 use App\Http\Controllers\Category\DeleteCategoryController;
 use App\Http\Controllers\Category\ListCategoryController;
 use App\Http\Controllers\Category\UpdateCategoryController;
+use App\Http\Controllers\Genre\CreateGenreController;
+use App\Http\Controllers\Genre\DeleteGenreController;
+use App\Http\Controllers\Genre\ListGenreController;
+use App\Http\Controllers\Genre\UpdateGenreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +19,8 @@ Route::post('/create-category', CreateCategoryController::class);
 Route::get('/list-categories', ListCategoryController::class);
 Route::put('/update-category/{id}', UpdateCategoryController::class);
 Route::delete('/delete-category/{id}', DeleteCategoryController::class);
+
+Route::post('/create-genre', CreateGenreController::class);
+Route::get('/list-genres', ListGenreController::class);
+Route::put('/update-genre/{id}', UpdateGenreController::class);
+Route::delete('/delete-genre/{id}', DeleteGenreController::class);

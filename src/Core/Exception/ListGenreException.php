@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core\Exception;
 
 use App\Core\Enum\CodeExceptionEnum;
+use Throwable;
 
 class ListGenreException extends \RuntimeException
 {

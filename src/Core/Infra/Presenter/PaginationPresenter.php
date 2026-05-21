@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Repositories\Paginate;
+namespace App\Core\Infra\Presenter;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\PaginationInterface;
 use App\Models\Category;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-final readonly class CategoryPagination implements PaginationInterface
+final readonly class PaginationPresenter implements PaginationInterface
 {
     public function __construct(
         private LengthAwarePaginator $paginator,

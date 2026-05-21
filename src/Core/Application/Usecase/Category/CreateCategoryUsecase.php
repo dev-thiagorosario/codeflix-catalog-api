@@ -6,7 +6,7 @@ namespace App\Core\Application\Usecase\Category;
 
 use App\Core\Application\DTO\Category\CreateCategoryInputDTO;
 use App\Core\Application\DTO\Category\CreateCategoryOutputDTO;
-use App\Core\Application\Interfaces\Category\CreateCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Usecase\Category\CreateCategoryUsecaseInterface;
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
 

@@ -6,7 +6,7 @@ namespace App\Core\Infra\Adapter\Category;
 
 use App\Core\Application\DTO\Category\ListCategoryInputDTO;
 use App\Core\Application\DTO\Category\ListCategoryOutputDTO;
-use App\Core\Application\Interfaces\Category\ListCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Adapter\Category\ListCategoryDataAdapterInterface;
 
 class ListCategoryDataAdapter implements ListCategoryDataAdapterInterface
 {

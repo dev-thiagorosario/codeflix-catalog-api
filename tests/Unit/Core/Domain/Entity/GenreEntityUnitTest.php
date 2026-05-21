@@ -109,6 +109,33 @@ class GenreEntityUnitTest extends TestCase
         $this->assertSame([$categoryId], $genre->categoriesId);
     }
 
+    public function test_it_accepts_category_ids_on_creation(): void
+    {
+        $firstCategoryId = (string) UuidResolver::random();
+        $secondCategoryId = (string) UuidResolver::random();
+
+        $genre = new GenreEntity(
+            name: 'Genre 1',
+            categoriesId: [$firstCategoryId, $secondCategoryId],
+        );
+
+        $this->assertSame([$firstCategoryId, $secondCategoryId], $genre->categoriesId);
+    }
+
+    public function test_it_keeps_category_ids_unique(): void
+    {
+        $categoryId = (string) UuidResolver::random();
+
+        $genre = new GenreEntity(
+            name: 'Genre 1',
+            categoriesId: [$categoryId, $categoryId],
+        );
+
+        $genre->addCategory($categoryId);
+
+        $this->assertSame([$categoryId], $genre->categoriesId);
+    }
+
     public function test_it_removes_category_id_from_genre(): void
     {
         $firstCategoryId = (string) UuidResolver::random();

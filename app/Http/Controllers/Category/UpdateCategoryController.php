@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Category;
 
-use App\Core\Application\Interfaces\Category\UpdateCategoryDataAdapterInterface;
-use App\Core\Application\Interfaces\Category\UpdateCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Adapter\Category\UpdateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Usecase\Category\UpdateCategoryUsecaseInterface;
 use App\Core\Exception\UpdateCategoryException;
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseJsend;

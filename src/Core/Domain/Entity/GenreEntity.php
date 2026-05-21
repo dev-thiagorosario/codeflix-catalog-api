@@ -21,20 +21,20 @@ class GenreEntity
     use MethodsMagicsTraits;
 
     /**
-     * @var array<int, string>
+     * @param  array<int, string>  $categoriesId
      */
-    protected array $categoriesId = [];
-
     public function __construct(
         protected ?UuidResolver $id = null,
         protected string $name = '',
         protected bool $isActive = true,
+        protected array $categoriesId = [],
         protected ?DateTime $createdAt = null,
         protected ?DateTime $updatedAt = null,
     ) {
         $this->id ??= UuidResolver::random();
         $this->createdAt ??= new DateTime;
         $this->updatedAt ??= new DateTime($this->createdAt->format('Y-m-d H:i:s'));
+        $this->categoriesId = array_values(array_unique($this->categoriesId));
 
         $this->validate();
     }
@@ -59,6 +59,10 @@ class GenreEntity
 
     public function addCategory(string $categoryId): void
     {
+        if (in_array($categoryId, $this->categoriesId, true)) {
+            return;
+        }
+
         $this->categoriesId[] = $categoryId;
     }
 

@@ -23,6 +23,14 @@ interface CategoryRepositoryInterface
     public function findById(string $id): ?CategoryEntity;
 
     /**
+     * Retorna os IDs dos registros associados às categorias informadas.
+     *
+     * @param  array<int>  $categoryIds  IDs das categorias a consultar.
+     * @return array<int> IDs dos registros encontrados.
+     */
+    public function getIdsByCategoryIds(array $categoryIds = []): array;
+
+    /**
      * Retorna uma lista de categorias com possibilidade de filtro e ordenação.
      *
      * @param  string  $filter  Filtro opcional (ex: nome).

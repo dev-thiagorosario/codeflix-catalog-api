@@ -6,7 +6,7 @@ namespace App\Core\Infra\Adapter\Category;
 
 use App\Core\Application\DTO\Category\UpdateCategoryInputDTO;
 use App\Core\Application\DTO\Category\UpdateCategoryOutputDTO;
-use App\Core\Application\Interfaces\Category\UpdateCategoryDataAdapterInterface;
+use App\Core\Application\Interfaces\Adapter\Category\UpdateCategoryDataAdapterInterface;
 
 class UpdateCategoryDataAdapter implements UpdateCategoryDataAdapterInterface
 {

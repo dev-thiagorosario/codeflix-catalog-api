@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Core\Application\Usecase\Category;
 
 use App\Core\Application\DTO\Category\DeleteCategoryInputDTO;
-use App\Core\Application\Interfaces\Category\DeleteCategoryUsecaseInterface;
+use App\Core\Application\Interfaces\Usecase\Category\DeleteCategoryUsecaseInterface;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
 use App\Core\Exception\CategoryNotFoundException;
 

@@ -1,14 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\Core\Application\Usecase\Genre;
 
 use App\Core\Application\DTO\Genre\ListGenreInputDTO;
 use App\Core\Application\DTO\Genre\ListGenreOutputDTO;
+use App\Core\Application\DTO\Genre\ListGenresInputDTO;
+use App\Core\Application\DTO\Genre\ListGenresOutputDTO;
+use App\Core\Application\Usecase\Genre\ListGenresUsecase;
 use App\Core\Application\Usecase\Genre\ListGenreUsecase;
 use App\Core\Domain\Entity\GenreEntity;
 use App\Core\Domain\Repository\GenreRepositoryInterface;
 use App\Core\Domain\Repository\PaginationInterface;
 use App\Core\Domain\Resolver\UuidResolver;
+use App\Core\Exception\GenreNotFoundException;
 use DateTime;
 use Mockery;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +28,7 @@ class ListGenreUsecaseTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_list_genres(): void
+    public function test_list_genre_by_id(): void
     {
         $genreId = UuidResolver::random();
         $genre = new GenreEntity(
@@ -33,6 +39,60 @@ class ListGenreUsecaseTest extends TestCase
         );
 
         $input = new ListGenreInputDTO(
+            id: (string) $genreId,
+        );
+
+        $genreRepository = Mockery::mock(GenreRepositoryInterface::class);
+        $genreRepository
+            ->shouldReceive('findById')
+            ->once()
+            ->with((string) $genreId)
+            ->andReturn($genre);
+
+        $usecase = new ListGenreUsecase($genreRepository);
+
+        $result = $usecase($input);
+
+        $this->assertInstanceOf(ListGenreOutputDTO::class, $result);
+        $this->assertSame((string) $genreId, $result->id);
+        $this->assertSame('Action', $result->name);
+        $this->assertTrue($result->isActive);
+        $this->assertSame('2026-05-19 10:00:00', $result->createdAt);
+    }
+
+    public function test_list_genre_by_id_throws_exception_when_genre_does_not_exist(): void
+    {
+        $genreId = (string) UuidResolver::random();
+        $input = new ListGenreInputDTO(
+            id: $genreId,
+        );
+
+        $genreRepository = Mockery::mock(GenreRepositoryInterface::class);
+        $genreRepository
+            ->shouldReceive('findById')
+            ->once()
+            ->with($genreId)
+            ->andReturnNull();
+
+        $usecase = new ListGenreUsecase($genreRepository);
+
+        $this->expectException(GenreNotFoundException::class);
+        $this->expectExceptionMessage('Gênero Não Encontrado');
+
+        $usecase($input);
+    }
+
+    public function test_list_genres(): void
+    {
+        $genreId = UuidResolver::random();
+        $genre = new GenreEntity(
+            id: $genreId,
+            name: 'Action',
+            isActive: true,
+            createdAt: new DateTime('2026-05-19 10:00:00'),
+        );
+
+        $input = new ListGenresInputDTO(
             name: 'Act',
             page: 2,
             perPage: 10,
@@ -53,11 +113,11 @@ class ListGenreUsecaseTest extends TestCase
             ->with('Act', 'ASC', 2, 10)
             ->andReturn($paginator);
 
-        $usecase = new ListGenreUsecase($genreRepository);
+        $usecase = new ListGenresUsecase($genreRepository);
 
         $result = $usecase($input);
 
-        $this->assertInstanceOf(ListGenreOutputDTO::class, $result);
+        $this->assertInstanceOf(ListGenresOutputDTO::class, $result);
         $this->assertSame(11, $result->total);
         $this->assertSame(2, $result->currentPage);
         $this->assertSame(2, $result->lastPage);
@@ -74,7 +134,7 @@ class ListGenreUsecaseTest extends TestCase
 
     public function test_list_genres_uses_default_input_values(): void
     {
-        $input = new ListGenreInputDTO;
+        $input = new ListGenresInputDTO;
 
         $paginator = Mockery::mock(PaginationInterface::class);
         $paginator->shouldReceive('items')->once()->andReturn([]);
@@ -90,7 +150,7 @@ class ListGenreUsecaseTest extends TestCase
             ->with('', 'DESC', 1, 10)
             ->andReturn($paginator);
 
-        $usecase = new ListGenreUsecase($genreRepository);
+        $usecase = new ListGenresUsecase($genreRepository);
 
         $result = $usecase($input);
 

@@ -2,28 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Repository\Category;
+namespace App\Core\Infra\Presenter;
 
-use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\PaginationInterface;
-use App\Models\Category;
+use Closure;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-final readonly class CategoryPagination implements PaginationInterface
+/**
+ * @template TModel of object
+ * @template TItem
+ */
+final readonly class PaginationPresenter implements PaginationInterface
 {
+    /**
+     * @param  LengthAwarePaginator<int, TModel>  $paginator
+     * @param  Closure(TModel): TItem  $mapper
+     */
     public function __construct(
         private LengthAwarePaginator $paginator,
+        private Closure $mapper,
     ) {}
 
     /**
-     * @return CategoryEntity[]
+     * @return array<int, TItem>
      */
     public function items(): array
     {
-        return array_map(
-            fn (Category $category): CategoryEntity => CategoryEntity::fromModel($category),
-            $this->paginator->items(),
-        );
+        return array_map($this->mapper, $this->paginator->items());
     }
 
     public function total(): int

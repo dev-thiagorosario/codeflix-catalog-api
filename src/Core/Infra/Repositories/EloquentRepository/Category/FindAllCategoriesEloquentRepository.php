@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Repository\Category;
+namespace App\Core\Infra\Repositories\EloquentRepository\Category;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\PaginationInterface;
+use App\Core\Infra\Presenter\PaginationPresenter;
 use App\Models\Category;
 
 class FindAllCategoriesEloquentRepository
@@ -23,7 +24,7 @@ class FindAllCategoriesEloquentRepository
             ->get();
 
         return $categories
-            ->map(fn (Category $category) => CategoryEntity::fromModel($category))
+            ->map(fn (Category $category): CategoryEntity => CategoryEntity::fromModel($category))
             ->all();
     }
 
@@ -36,6 +37,9 @@ class FindAllCategoriesEloquentRepository
             ->orderBy('name', $order)
             ->paginate(perPage: $perPage, page: $page);
 
-        return new CategoryPagination($categories);
+        return new PaginationPresenter(
+            $categories,
+            fn (Category $category): CategoryEntity => CategoryEntity::fromModel($category),
+        );
     }
 }

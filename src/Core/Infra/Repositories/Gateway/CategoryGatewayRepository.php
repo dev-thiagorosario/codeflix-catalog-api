@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Repository\Category;
+namespace App\Core\Infra\Repositories\Gateway;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\CategoryRepositoryInterface;
 use App\Core\Domain\Repository\PaginationInterface;
+use App\Core\Infra\Repositories\EloquentRepository\Category\CreateCategoryEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\DeleteCategoryEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\FindAllCategoriesEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\FindCategoryByIdEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\GetIdsByCategoryIdsEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\UpdateCategoryEloquentRepository;
 use App\Models\Category;
 
-final readonly class CategoryEloquentRepository implements CategoryRepositoryInterface
+final readonly class CategoryGatewayRepository implements CategoryRepositoryInterface
 {
     public function __construct(
         private CreateCategoryEloquentRepository $createCategoryRepository,

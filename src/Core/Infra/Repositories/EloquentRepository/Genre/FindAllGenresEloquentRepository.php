@@ -2,35 +2,35 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Repositories\EloquentRepository\Category;
+namespace App\Core\Infra\Repositories\EloquentRepository\Genre;
 
-use App\Core\Domain\Entity\CategoryEntity;
+use App\Core\Domain\Entity\GenreEntity;
 use App\Core\Domain\Repository\PaginationInterface;
 use App\Core\Infra\Presenter\PaginationPresenter;
-use App\Models\Category;
+use App\Models\Genre;
 
-class FindAllCategoriesEloquentRepository
+class FindAllGenresEloquentRepository
 {
     /**
-     * @return CategoryEntity[]
+     * @return GenreEntity[]
      */
     public function findAll(string $filter = '', string $order = 'DESC'): array
     {
-        $categories = Category::query()
+        $genres = Genre::query()
             ->when($filter, function ($query, string $filter) {
                 $query->where('name', 'like', "%{$filter}%");
             })
             ->orderBy('name', $order)
             ->get();
 
-        return $categories
-            ->map(fn (Category $category): CategoryEntity => CategoryEntity::fromModel($category))
+        return $genres
+            ->map(fn (Genre $genre): GenreEntity => GenreEntity::fromModel($genre))
             ->all();
     }
 
     public function paginate(string $filter = '', string $order = 'DESC', int $page = 1, int $perPage = 10): PaginationInterface
     {
-        $categories = Category::query()
+        $genres = Genre::query()
             ->when($filter, function ($query, string $filter) {
                 $query->where('name', 'like', "%{$filter}%");
             })
@@ -38,8 +38,8 @@ class FindAllCategoriesEloquentRepository
             ->paginate(perPage: $perPage, page: $page);
 
         return new PaginationPresenter(
-            $categories,
-            fn (Category $category): CategoryEntity => CategoryEntity::fromModel($category),
+            $genres,
+            fn (Genre $genre): GenreEntity => GenreEntity::fromModel($genre),
         );
     }
 }

@@ -7,7 +7,11 @@ namespace Tests\Unit\Core\Domain\Entity;
 use App\Core\Domain\Entity\GenreEntity;
 use App\Core\Domain\Resolver\UuidResolver;
 use App\Core\Exception\EntityValidationException;
+use App\Models\Category;
+use App\Models\Genre;
 use DateTime;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Carbon;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 
@@ -164,6 +168,65 @@ class GenreEntityUnitTest extends TestCase
         $genre->removeCategory((string) UuidResolver::random());
 
         $this->assertSame([$categoryId], $genre->categoriesId);
+    }
+
+    public function test_it_creates_entity_from_model_with_loaded_categories(): void
+    {
+        $genreId = (string) UuidResolver::random();
+        $firstCategoryId = (string) UuidResolver::random();
+        $secondCategoryId = (string) UuidResolver::random();
+
+        $model = new Genre;
+        $model->setRawAttributes([
+            'id' => $genreId,
+            'name' => 'Action',
+            'is_active' => false,
+            'created_at' => new Carbon('2026-05-20 10:00:00'),
+            'updated_at' => new Carbon('2026-05-20 11:00:00'),
+            'deleted_at' => new Carbon('2026-05-20 12:00:00'),
+        ]);
+
+        $firstCategory = new Category;
+        $firstCategory->setRawAttributes(['id' => $firstCategoryId]);
+
+        $secondCategory = new Category;
+        $secondCategory->setRawAttributes(['id' => $secondCategoryId]);
+
+        $model->setRelation('categories', new EloquentCollection([
+            $firstCategory,
+            $secondCategory,
+        ]));
+
+        $genre = GenreEntity::fromModel($model);
+
+        $this->assertSame($genreId, $genre->id());
+        $this->assertSame('Action', $genre->name);
+        $this->assertFalse($genre->isActive);
+        $this->assertSame([$firstCategoryId, $secondCategoryId], $genre->categoriesId);
+        $this->assertSame('2026-05-20 10:00:00', $genre->createdAt());
+        $this->assertSame('2026-05-20 11:00:00', $genre->updatedAt());
+        $this->assertSame('2026-05-20 12:00:00', $genre->deletedAt());
+    }
+
+    public function test_it_creates_entity_from_model_without_loaded_categories(): void
+    {
+        $genreId = (string) UuidResolver::random();
+
+        $model = new Genre;
+        $model->setRawAttributes([
+            'id' => $genreId,
+            'name' => 'Action',
+            'is_active' => true,
+            'created_at' => new Carbon('2026-05-20 10:00:00'),
+            'updated_at' => new Carbon('2026-05-20 11:00:00'),
+        ]);
+
+        $genre = GenreEntity::fromModel($model);
+
+        $this->assertSame($genreId, $genre->id());
+        $this->assertTrue($genre->isActive);
+        $this->assertSame([], $genre->categoriesId);
+        $this->assertNull($genre->deletedAt());
     }
 
     public function test_it_rejects_names_shorter_than_three_characters(): void

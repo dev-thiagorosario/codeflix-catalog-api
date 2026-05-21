@@ -6,7 +6,7 @@ namespace Tests\Unit\Core\Infra\Repository\Category;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Resolver\UuidResolver;
-use App\Core\Infra\Repository\Category\UpdateCategoryEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\UpdateCategoryEloquentRepository;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;

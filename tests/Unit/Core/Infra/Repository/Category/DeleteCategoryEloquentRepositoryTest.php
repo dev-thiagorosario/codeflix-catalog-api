@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Core\Infra\Repository\Category;
 
 use App\Core\Domain\Resolver\UuidResolver;
-use App\Core\Infra\Repository\Category\DeleteCategoryEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\DeleteCategoryEloquentRepository;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;

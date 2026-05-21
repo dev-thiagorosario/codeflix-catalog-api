@@ -19,14 +19,14 @@ use App\Core\Domain\Repository\CategoryRepositoryInterface;
 use App\Core\Infra\Adapter\Category\CreateCategoryDataAdapter;
 use App\Core\Infra\Adapter\Category\ListCategoryDataAdapter;
 use App\Core\Infra\Adapter\Category\UpdateCategoryDataAdapter;
-use App\Core\Infra\Repository\Category\CategoryEloquentRepository;
+use App\Core\Infra\Repositories\Gateway\CategoryGatewayRepository;
 use Illuminate\Support\ServiceProvider;
 
 class CategoryServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->bind(CategoryRepositoryInterface::class, CategoryEloquentRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryGatewayRepository::class);
 
         $this->app->bind(CreateCategoryDataAdapterInterface::class, CreateCategoryDataAdapter::class);
         $this->app->bind(ListCategoryDataAdapterInterface::class, ListCategoryDataAdapter::class);

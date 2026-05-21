@@ -6,7 +6,7 @@ namespace Tests\Unit\Core\Infra\Repository\Category;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Resolver\UuidResolver;
-use App\Core\Infra\Repository\Category\FindCategoryByIdEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\FindCategoryByIdEloquentRepository;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

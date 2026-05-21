@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Infra\Repository\Category;
+namespace App\Core\Infra\Repositories\Paginate;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\PaginationInterface;

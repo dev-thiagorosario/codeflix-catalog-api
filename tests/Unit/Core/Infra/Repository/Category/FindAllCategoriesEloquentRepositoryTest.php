@@ -6,7 +6,7 @@ namespace Tests\Unit\Core\Infra\Repository\Category;
 
 use App\Core\Domain\Entity\CategoryEntity;
 use App\Core\Domain\Repository\PaginationInterface;
-use App\Core\Infra\Repository\Category\FindAllCategoriesEloquentRepository;
+use App\Core\Infra\Repositories\EloquentRepository\Category\FindAllCategoriesEloquentRepository;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

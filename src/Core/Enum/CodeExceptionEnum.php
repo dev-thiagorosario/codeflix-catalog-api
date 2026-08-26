@@ -18,4 +18,5 @@ enum CodeExceptionEnum: int
     case ERROR_UPDATE_GENRE = 1012;
     case ERROR_DELETE_GENRE = 1013;
     case ERROR_LIST_GENRES = 1014;
+    case CAST_MEMBER_NOT_FOUND = 1015;
 }

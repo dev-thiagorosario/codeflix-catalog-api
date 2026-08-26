@@ -8,6 +8,7 @@ use App\Core\Domain\Resolver\UuidResolver;
 use App\Core\Domain\Trait\MethodsMagicsTraits;
 use App\Core\Domain\Validation\DomainValidation;
 use App\Core\Enum\CastMemberTypeEnum;
+use App\Models\CastMember;
 use DateTime;
 
 /**
@@ -51,5 +52,15 @@ class CastMemberEntity
         DomainValidation::notNull($name);
         DomainValidation::strMaxLength($name);
         DomainValidation::strMinLength($name);
+    }
+
+    public static function fromModel(CastMember $model): self
+    {
+        return new self(
+            id: $model->id,
+            name: $model->name,
+            type: $model->type,
+            createdAt: $model->created_at?->format('Y-m-d H:i:s'),
+        );
     }
 }

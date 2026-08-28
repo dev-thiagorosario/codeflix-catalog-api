@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CastMember\CreateCastMemberController;
+use App\Http\Controllers\CastMember\DeleteCastMemberController;
+use App\Http\Controllers\CastMember\ListCastMemberController;
+use App\Http\Controllers\CastMember\UpdateCastMemberController;
 use App\Http\Controllers\Category\CreateCategoryController;
 use App\Http\Controllers\Category\DeleteCategoryController;
 use App\Http\Controllers\Category\ListCategoryController;
@@ -24,3 +28,8 @@ Route::post('/create-genre', CreateGenreController::class);
 Route::get('/list-genres', ListGenreController::class);
 Route::put('/update-genre/{id}', UpdateGenreController::class);
 Route::delete('/delete-genre/{id}', DeleteGenreController::class);
+
+Route::post('/create-cast-member', CreateCastMemberController::class);
+Route::get('/list-cast-members', ListCastMemberController::class);
+Route::put('/update-cast-member/{id}', UpdateCastMemberController::class);
+Route::delete('/delete-cast-member/{id}', DeleteCastMemberController::class);
